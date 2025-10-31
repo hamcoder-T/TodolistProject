@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Event
+from django.contrib.admin import ModelAdmin
+from .models import Event, Task
 from django.core.mail import send_mail
 
 admin.sites.AdminSite.site_title = "Admin"
@@ -43,6 +44,45 @@ class EventAdmin(admin.ModelAdmin):
     actions = [done_action, undone_action, send_gmail]
 
     # autocomplete_fields = ['user']
+
+    @admin.display(description='توضیحات (خلاصه)')
+    def short_description(self, obj):
+        text = obj.description or ''
+        return text[:20] + ('...' if len(text) > 20 else '')
+
+
+def done_action(modeladmin, requst, queryset):
+    result = queryset.update(is_done=True)
+    modeladmin.message_user(requst, f"{result} event changed to Done status!")
+
+
+def undone_action(modeladmin, requst, queryset):
+    result = queryset.update(is_done=False)
+    modeladmin.message_user(requst, f"{result} event changed to Done status!")
+
+
+def send_gmail(modeladmin, request, queryset):
+    modeladmin.message_user(request, f"{len(queryset)} reminder emails were sent to users.")
+    for task in queryset:
+        if task.user.email:
+            subject = "Notification for an event"
+            message_body = (f"Hello dear {task.user.username}, this is a notification for you to remind you of the "
+                            f"event '{task.title}'")
+            from_email = 'hamed.syntaxsavvy@gmail.com'
+            recipient_list = ['hj0745869@gmail.com']
+            send_mail(subject, message_body, from_email, recipient_list, fail_silently=False)
+
+
+done_action.short_description = "change to done status"
+undone_action.short_description = "change to undone status"
+
+
+@admin.register(Task)
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ['user', 'title', 'short_description', 'is_done']
+    list_filter = ['is_done']
+    autocomplete_fields = ['user']
+    actions = []
 
     @admin.display(description='توضیحات (خلاصه)')
     def short_description(self, obj):
