@@ -67,7 +67,7 @@ def send_gmail(modeladmin, request, queryset):
         if task.user.email:
             subject = "Notification for an event"
             message_body = (f"Hello dear {task.user.username}, this is a notification for you to remind you of the "
-                            f"event '{task.title}'")
+                            f"task '{task.title}'")
             from_email = 'hamed.syntaxsavvy@gmail.com'
             recipient_list = ['hj0745869@gmail.com']
             send_mail(subject, message_body, from_email, recipient_list, fail_silently=False)
