@@ -1,0 +1,12 @@
+{% extends 'parent/base.html' %}
+{% block title %}
+	edit event
+{% endblock %}
+{% block content %}
+	<h1 class="add-event-form-h1">فرم ویرایش رویداد</h1>
+    <form method="post" class="add-event-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="save-btn" type="submit">ثبت</button>
+    </form>
+{% endblock %}

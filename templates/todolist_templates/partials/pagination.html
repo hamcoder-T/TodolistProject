@@ -1,0 +1,12 @@
+<div class="pagination">
+    {% with events as page %}
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}" class="laque-btn">&laquo;</a>
+        {% endif %}
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}" class="raquo-btn">&raquo;</a>
+        {% endif %}
+{#        {% if tasks.num_pages|length > 2 %}#}
+{#        {% endif %}#}
+    {% endwith %}
+</div>

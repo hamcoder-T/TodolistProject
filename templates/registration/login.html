@@ -1,0 +1,42 @@
+<h1>ورود</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">ثبت</button>
+</form>
+<style>
+    body{
+        background-color: #012437;
+    }
+    form{
+        font-size: 20px;
+        color: white;
+        text-align: center;
+        border: 3px solid darkred;
+        border-radius: 10px;
+        width: 50%;
+        position: absolute;
+        left: 25%;
+        top: 32%;
+        padding: 20px 0;
+    }
+    form input{
+        font-size: 15px;
+    }
+    form button{
+        font-size: 20px;
+        background-color: greenyellow;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
+    form button:hover{
+        filter: grayscale(100%);
+        opacity: 50%;
+    }
+    h1{
+        font-size: 50px;
+        text-align: center;
+        color: white;
+        margin-top: 10%;
+    }
+</style>

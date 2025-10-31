@@ -1,0 +1,43 @@
+{% extends 'parent/base.html' %}
+{% block title %}home{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-5">به to do list خوش آمدید، {{ user.get_full_name|default:user.username }}!</h1>
+
+    <div class="row">
+        <!-- بخش رویدادها -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-primary">رویدادها</h5>
+                    <p class="card-text">مدیریت برنامه‌های زمانی</p>
+                    <a href="{% url 'todolist:event-list' %}" class="btn btn-primary">برو به رویدادها</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بخش وظایف -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success">وظایف</h5>
+                    <p class="card-text">کارهای روزانه و تیک‌دار</p>
+                    <a href="{% url 'todolist:task_list' %}" class="btn btn-success">برو به وظایف</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بخش پروفایل -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-info">پروفایل</h5>
+                    <p class="card-text">تنظیمات و اطلاعات</p>
+                    <a href="#" class="btn btn-info">مشاهده پروفایل</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

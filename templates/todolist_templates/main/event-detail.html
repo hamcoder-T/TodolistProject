@@ -1,0 +1,63 @@
+{% extends 'parent/base.html' %}
+{% block title %}
+	event detail
+{% endblock %}
+{% block content %}
+    <h1 style="text-align: center; margin-top: 7%; margin-bottom: 10px">جزییات رویداد</h1>
+	<div class="event-detail" data-event-id="{{ event.id }}">
+        عنوان: {{ event.title }}
+        <hr>
+        توضیحات: {{ event.description|linebreaks }}
+        <hr>
+        زمان شروع: {{ event.begin }}
+        <hr>
+        زمان پایان: {{ event.end }}
+        <hr>
+        <p id="status-show-in-detail">
+                وضعیت: {% if event.status == 'UN' %}
+                    انجام نشده
+                {% else %}
+                    انجام شده
+                {% endif %}
+        </p>
+            <button id="event-done-btn" style="margin-right: 10px; color: black; font-size: 15px;
+            padding: 5px; border-radius: 10px;">
+                {% if event.status == 'UN' %}
+                    انجام شد
+                {% else %}
+                    انجام نشد
+                {% endif %}
+            </button>
+    </div>
+    <div class="event-detail-lnk">
+        <a href="{% url 'todolist:event-list' %}" id="return-lnk">
+            بازگشت به لیست رویداد ها</a>
+        <a href="{% url 'todolist:edit-event' event.id %}" id="edit-lnk">ویرایش رویداد</a>
+        <a href="{% url 'todolist:delete-event' event.id %}">حذف رویداد</a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function(){
+            $('#event-done-btn').click(function(){
+                var button = $(this);
+                var event_id = button.closest('.event-detail').data('event-id');
+                var CSRF_TOKEN = '{{ csrf_token }}';
+                var Text = $('#status-show-in-detail');
+                $.ajax({
+                    type: "POST",
+                    url: '{% url 'todolist:change-status' %}',
+                    data: {'event_id': event_id, 'csrfmiddlewaretoken': CSRF_TOKEN},
+                    success: function(response){
+                        if (response.done_now){
+                            button.text('انجام نشد');
+                            Text.text('وضعیت: انجام شده');
+                        } else{
+                            button.text('انجام شد');
+                            Text.text('وضعیت: انجام نشده');
+                        }
+                    },
+                });
+            });
+        });
+    </script>
+{% endblock %}

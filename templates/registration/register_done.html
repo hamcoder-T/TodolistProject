@@ -1,0 +1,11 @@
+{% extends 'parent/base.html' %}
+{% block title %}
+	register done
+{% endblock %}
+{% block content %}
+	<div class="success-notif">
+        <h1>ثبت نام شما با موفقیت انجام شد!</h1>
+        <br>
+        <a href="{% url 'todolist:login' %}"><h2>ورود</h2></a>
+    </div>
+{% endblock %}
