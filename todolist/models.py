@@ -1,9 +1,8 @@
 from django.db import models
-from django.shortcuts import reverse
+from django.urls.base import reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
-
 
 # Create your models here.
 class Event(models.Model):
@@ -33,7 +32,7 @@ class Event(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('todolist:event-detail', args=[self.id])
+        return reverse('todolist:event-detail', args=[self.id])  # type: ignore
 
 
 class Task(models.Model):
